@@ -66,9 +66,9 @@ gulp.task('image', function() {
 });
 
 gulp.task('spriter', function() {
-    return gulp.src('./css/recharge.css')//目标css
+    return gulp.src('./src/css/sp.css')//目标css
         .pipe(spriter({
-            'spriteSheet': './dist/images/spritesheet.png', //这是雪碧图自动合成的图。 很重要
+            'spriteSheet': './dist/images/spritesheet.png',
             'pathToSpriteSheetFromCSS': '../images/spritesheet.png' //这是在css引用的图片路径，很重要
         }))
         .pipe(gulp.dest('./dist/css')); //最后生成出来
@@ -98,7 +98,7 @@ gulp.task('connect', function() {
 
 //sequence的返回函数只能运行一次 所以这里用function cb方式使用
 gulp.task('watchlist',function (cb) {
-    sequence('clean',['mincss','minjs','html','image'])(cb)
+    sequence('clean',['spriter','mincss','minjs','html','image'])(cb)
 });
 
 gulp.task('watch',function () {
@@ -108,7 +108,7 @@ gulp.task('watch',function () {
 
 //中括号外面的是串行执行， 中括号里面的任务是并行执行。
 gulp.task('default',function (cb) {
-    sequence('clean',['mincss','minjs','html','image','connect'],'watch')(cb)
+    sequence('clean',['spriter','mincss','minjs','html','image','connect'],'watch')(cb)
 });
 
 
