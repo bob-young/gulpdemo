@@ -47,7 +47,7 @@ gulp.task('minjs',function () {
         .pipe(gulp.dest('dist/js'))
 });
 
-// 检查js
+// jshint
 gulp.task('hint', function() {
     return gulp.src('src/js/*.js')
         .pipe(jshint())
@@ -65,6 +65,7 @@ gulp.task('image', function() {
         .pipe(gulp.dest('./dist/images'));
 });
 
+//合并雪碧图
 gulp.task('spriter', function() {
     return gulp.src('./src/css/sp.css')//目标css
         .pipe(spriter({
@@ -82,6 +83,7 @@ gulp.task('html', function () {
         .pipe(useref())//根据标记的块  合并js或者css
         .pipe(gulpif('*.js',uglify()))
         .pipe(gulpif('*.css',mincss()))
+        .pipe(gulpif('*.png',imagemin()))
         .pipe(connect.reload()) //重新构建后自动刷新页面
         .pipe(gulp.dest('dist'));
 });
